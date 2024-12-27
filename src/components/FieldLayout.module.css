@@ -1,0 +1,29 @@
+.field {
+	width: 180px;
+	border: 2px solid #333;
+}
+
+.cell {
+	width: 60px;
+	height: 60px;
+	border: 2px solid #333;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	transition: background-color 0.3s;
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+}
+
+.cell:empty {
+	background-color: #fff;
+}
+
+.cell.x {
+	color: #a00000;
+}
+
+.cell.o {
+	color: #33c1ff;
+}

@@ -1,0 +1,27 @@
+:root {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: #f0f0f0;
+}
+
+.resetButton {
+	width: 184px;
+	margin-top: 15px;
+	background-color: #3759b8;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-size: 16px;
+	font-weight: bold;
+	transition:
+		background-color 0.3s,
+		transform 0.2s;
+}
+
+.resetButton:hover {
+	background-color: #294185;
+}

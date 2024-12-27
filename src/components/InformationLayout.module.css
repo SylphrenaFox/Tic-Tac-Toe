@@ -1,0 +1,19 @@
+.info {
+	padding: 15px;
+	margin: 10px 0;
+	font-size: 24px;
+	text-align: center;
+	font-weight: bold; /* Жирный текст */
+}
+
+.draw {
+	color: #294185; /* Оранжевый цвет для ничьей */
+}
+
+.winX {
+	color: #a00000; /* Цвет для победы "X" */
+}
+
+.winO {
+	color: #33c1ff; /* Цвет для победы "O" */
+}
