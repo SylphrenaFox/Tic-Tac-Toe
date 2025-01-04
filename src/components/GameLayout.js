@@ -1,6 +1,7 @@
 import { Field } from './Field';
 import { Information } from './Information';
 import styles from './GameLayout.module.css';
+import PropTypes from 'prop-types';
 
 export const GameLayout = ({
 	field,
@@ -27,4 +28,8 @@ export const GameLayout = ({
 			</button>
 		</>
 	);
+};
+
+GameLayout.propTypes = {
+	handleResetButton: PropTypes.func,
 };
