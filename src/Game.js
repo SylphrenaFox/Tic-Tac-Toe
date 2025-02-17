@@ -1,12 +1,20 @@
-import { useState } from 'react';
-import { GameLayout } from './components/GameLayout';
+import styles from './Game.module.css';
+import { useEffect, useState } from 'react';
 import { WIN_PATTERNS } from './assets/WIN_PATTERNS';
+import { store } from './store';
+import { Field } from './components/Field';
+import { Information } from './components/Information';
 
 export const Game = () => {
-	const [currentPlayer, setCurrentPlayer] = useState('X');
-	const [isGameEnded, setIsGameEnded] = useState(false);
-	const [isDraw, setIsDraw] = useState(false);
-	const [field, setField] = useState(Array(9).fill(''));
+	const [state, setState] = useState(store.getState());
+
+	useEffect(() => {
+		const unsubscribe = store.subscribe(() => {
+			setState(store.getState());
+		});
+		return () => unsubscribe();
+	}, []);
+	const { field, currentPlayer, isGameEnded } = state;
 
 	const checkWinner = (field) => {
 		return WIN_PATTERNS.some((pattern) => {
@@ -20,35 +28,34 @@ export const Game = () => {
 
 		const newField = [...field];
 		newField[index] = currentPlayer;
-		setField(newField);
+		store.dispatch({ type: 'SET_FIELD', payload: newField });
 
 		if (checkWinner(newField)) {
-			setIsGameEnded(true);
+			store.dispatch({ type: 'IS_GAME_ENDED', payload: true });
 			return;
 		}
 
 		if (newField.every((cell) => cell)) {
-			setIsDraw(true);
+			store.dispatch({ type: 'IS_DRAW', payload: true });
 		} else {
-			setCurrentPlayer(currentPlayer === 'X' ? '0' : 'X');
+			store.dispatch({
+				type: 'SET_CURRENT_PLAYER',
+				payload: currentPlayer === 'X' ? '0' : 'X',
+			});
 		}
 	};
 
 	const handleResetButton = () => {
-		setCurrentPlayer('X');
-		setIsDraw(false);
-		setIsGameEnded(false);
-		setField(Array(9).fill(''));
+		store.dispatch({ type: 'RESTART_GAME' });
 	};
 
 	return (
-		<GameLayout
-			field={field}
-			isDraw={isDraw}
-			isGameEnded={isGameEnded}
-			currentPlayer={currentPlayer}
-			handleCellClick={handleCellClick}
-			handleResetButton={handleResetButton}
-		></GameLayout>
+		<>
+			<Field handleCellClick={handleCellClick} />
+			<Information />
+			<button className={styles.resetButton} onClick={handleResetButton}>
+				Начать заново
+			</button>
+		</>
 	);
 };
